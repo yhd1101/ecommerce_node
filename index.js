@@ -1,8 +1,12 @@
 import express from "express"
+import morgan from "morgan"
 const app = express()
 
 import productRoutes from "./routes/product.js"
 import orderRoutes from "./routes/order.js"
+
+// 설정
+app.use(morgan("common"))
 
 
 
