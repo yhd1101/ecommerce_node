@@ -3,6 +3,16 @@ const app = express()
 
 
 
+//request, response test
+app.use("/hello", (req, res) => {
+    res.json({
+        data : "HelloWorld",
+        body : "Hi"
+
+    })
+})
+
+
 const port = 8000
 
 app.listen(port,console.log("Server started"))
