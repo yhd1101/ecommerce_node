@@ -1,16 +1,13 @@
 import express from "express"
 const app = express()
 
+import productRoutes from "./routes/product.js"
+import orderRoutes from "./routes/order.js"
 
 
-//request, response test
-app.use("/hello", (req, res) => {
-    res.json({
-        data : "HelloWorld",
-        body : "Hi"
-
-    })
-})
+// routing
+app.use("/product", productRoutes)
+app.use("/order", orderRoutes)
 
 
 const port = 8000
