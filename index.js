@@ -5,9 +5,11 @@ import productRoutes from "./routes/product.js"
 import orderRoutes from "./routes/order.js"
 
 
+
 // routing
 app.use("/product", productRoutes)
 app.use("/order", orderRoutes)
+
 
 
 const port = 8000
