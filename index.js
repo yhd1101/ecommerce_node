@@ -1,7 +1,9 @@
 import express from "express"
 import morgan from "morgan"
 import bodyParser from "body-parser";
+import dotEnv from "dotenv"
 const app = express()
+dotEnv.config()
 
 import productRoutes from "./routes/product.js"
 import orderRoutes from "./routes/order.js"
@@ -19,7 +21,7 @@ app.use("/order", orderRoutes)
 
 
 
-const port = 8000
+const port = process.env.PORT || 9090
 
 app.listen(port,console.log("Server started"))
 
