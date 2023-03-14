@@ -17,8 +17,14 @@ router.get("/", (req, res) => {
 //product를 등록하는 api
 
 router.post("/create", (req, res) => {
+    const newProduct = {
+        name : req.body.productName,
+        price : req.body.productPrice,
+        desc : req.body.productDesc
+    }
     res.json({
-        msg : "created a product"
+        msg : "created a product",
+        productInfo : newProduct
     })
 })
 
