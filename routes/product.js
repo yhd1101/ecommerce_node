@@ -2,7 +2,7 @@
 //1
 import express from "express";
 import productModel from "../models/product.js";
-import product from "../models/product.js";
+
 
 const router = express.Router()
 
@@ -14,6 +14,11 @@ router.get("/", (req, res) => {
     productModel
         .find()
         .then(products => {
+            if(products.length === 0){
+                return res.json({
+                    msg : "data lengths is 0"
+                })
+            }
             res.json({
                 msg : "get all products",
                 count : products.length,
@@ -100,15 +105,41 @@ router.put("/update", (req, res) => {
 })
 
 
-//product를 삭제하는 api
+//product를 전체를 삭제하는 api
 
-router.delete("/delete", (req, res) => {
-    res.json({
-        msg : "deleted a product"
-    })
+router.delete("/", (req, res) => {
+    productModel
+        .deleteMany()
+        .then(_ => {
+            res.json({
+                msg : "deleted all product"
+            })
+        })
+        .catch(err => {
+            res.json({
+                msg : err.message
+            })
+        })
+    // res.json({
+    //     msg : "deleted a product"
+    // })
 })
 
-
+//특정 product를 삭제하는 api
+router.delete("/:productid", (req, res) => {
+    productModel
+        .findByIdAndDelete(req.params.productid)
+        .then(_ => {
+            res.json({
+                msg : "deleted products"
+            })
+        })
+        .catch(err => {
+            res.json({
+                msg : err.message
+            })
+        })
+})
 
 
 //2
