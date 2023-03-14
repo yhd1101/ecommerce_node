@@ -12,8 +12,16 @@ router.get("/", (req, res) => {
 
 //order를 등록하는 api
 router.post("/create", (req, res) => {
+    const newOrder = {
+        product : req.body.orderProduct,
+        qty : req.body.orderQty,
+        memo : req.body.orderMemo
+
+    }
     res.json({
-        msg : "created a order"
+        msg : "created a order",
+        result : newOrder
+
     })
 })
 
