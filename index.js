@@ -8,6 +8,7 @@ dotEnv.config()
 
 import productRoutes from "./routes/product.js"
 import orderRoutes from "./routes/order.js"
+import userRoutes from "./routes/user"
 
 
 //데이터베이스 연결 정보
@@ -27,6 +28,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 // routing
 app.use("/product", productRoutes)
 app.use("/order", orderRoutes)
+app.use("/user", userRoutes)
 
 
 
