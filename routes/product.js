@@ -98,10 +98,27 @@ router.post("/create", (req, res) => {
 })
 
 //product를 수정하는 api
-router.put("/update", (req, res) => {
-    res.json({
-        msg: "updated a product"
-    })
+router.put("/:productid", (req, res) => {
+    const productid = req.params.productid //변경할 대상
+    //변경하고자하는 내용 (object)
+    const updateOps = {}
+
+    for (const ops of req.body) {
+        updateOps[ops.propName] = ops.value;
+    }
+
+    productModel
+        .findByIdAndUpdate(productid, {$set : updateOps}) // 맨처음 id =productid (변경할 대상), 두번째 update 변경할 내용 {}로 표시해줌
+        .then(_ => {
+            res.json({
+                msg : `updated product by ${productid}`
+            })
+        })
+        .catch(err => {
+            res.json({
+                msg : err.message
+            })
+        })
 })
 
 
