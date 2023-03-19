@@ -68,9 +68,9 @@ router.post("/create", (req, res) => {
     // }
     const newProduct = new productModel({
         name : req.body.productName,
-        price : req.body.prodcutPrice,
+        price : req.body.productPrice,
         desc : req.body.productDesc,
-        catagory : req.body.productCatagory
+        category : req.body.productCategory
 
     })
     newProduct
@@ -78,11 +78,7 @@ router.post("/create", (req, res) => {
         .then(aaa => {
             res.json({
                 msg : "Successful create User",
-                user : {
-                    name : aaa.name,
-                    price : aaa.price,
-                    id : aaa._id
-                }
+                user :aaa
             })
         })
         .catch(err => {
@@ -105,6 +101,7 @@ router.put("/:productid", (req, res) => {
 
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value;
+        console.log(updateOps)
     }
 
     productModel
