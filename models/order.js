@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const orderSchema = mongoose.Schema({
     product : {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId, //product에 있는 moongse id를 가져온다.
         ref : "product",
         required : true
     },

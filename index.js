@@ -8,7 +8,7 @@ dotEnv.config()
 
 import productRoutes from "./routes/product.js"
 import orderRoutes from "./routes/order.js"
-import userRoutes from "./routes/user"
+import userRoutes from "./routes/user.js"
 
 
 //데이터베이스 연결 정보

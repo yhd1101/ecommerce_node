@@ -18,13 +18,13 @@ const userSchema = mongoose.Schema({
         default : true //true면 남자, false는 여자로 정의
     },
 
-    id : {
+    userId : {
         type: String,
         required: true
     },
 
     password : {
-        type : Number,
+        type : String,
         required : true
     },
 
@@ -38,6 +38,6 @@ const userSchema = mongoose.Schema({
     }
 })
 
-const userModel = mongoose.Model("user", userSchema)
+const userModel = mongoose.model("user", userSchema)
 
 export default userModel
