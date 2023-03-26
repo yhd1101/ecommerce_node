@@ -1,5 +1,6 @@
 import express from "express";
 import userModel from "../models/user.js";
+import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 
 const router =express.Router()
@@ -52,6 +53,33 @@ router.post("/signup", async (req, res) => {
 
 //로그인
 router.post("/login", async (req, res) => {
+    // id 유무 체크 => password compare => 접속정보 암호(return jwt(json web token)
+    const user = await userModel.findOne({ userId : req.body.userId })
+    if(!user) {
+        return res.json({
+            msg : "No userId"
+        })
+    }
+
+    const hashedPassword = await bcrypt.compare(req.body.password, user.password) //compare 매칭
+    if(hashedPassword === false){
+        return res.json({
+            msg : "password do not match"
+        })
+    }
+    //jsonwebtoken 생성
+    const token =  await jwt.sign(
+       //암호화된 값을 무엇을 담을건지
+        {id : user._id},
+        process.env.SECRET_KEY,
+        { expiresIn: "1h"}
+    )
+    res.json({
+        msg : "Successful login",
+        token : token
+    })
+
+
 
 })
 
