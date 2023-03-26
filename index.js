@@ -9,15 +9,17 @@ dotEnv.config()
 import productRoutes from "./routes/product.js"
 import orderRoutes from "./routes/order.js"
 import userRoutes from "./routes/user.js"
+import connectDB from "./config/database.js";
 
 
 //데이터베이스 연결 정보
+connectDB()
 
-const dbAddress = process.env.MONGODB_ADDRESS
-mongoose
-    .connect(dbAddress)
-    .then(_ => console.log("database connected"))
-    .catch(err => console.log(err.message))
+// const dbAddress = process.env.MONGODB_ADDRESS
+// mongoose
+//     .connect(dbAddress)
+//     .then(_ => console.log("database connected"))
+//     .catch(err => console.log(err.message))
 
 // 설정
 app.use(morgan("commonn"))

@@ -2,6 +2,7 @@ import express from "express";
 import userModel from "../models/user.js";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+import checkAuth from "../config/checkAuth.js"
 
 const router =express.Router()
 
@@ -83,6 +84,24 @@ router.post("/login", async (req, res) => {
 
 })
 
+//프로필 정보 가져오기
+router.get("/", checkAuth, async (req, res) => {
+    console.log(req.user)
 
+    const { id } = req.user
+    await userModel
+        .findById(id)
+        .then(user => {
+            res.json({
+                msg : "get user",
+                user : user
+            })
+        })
+        .catch(err => {
+            res.json({
+                msg : err.message
+            })
+        })
+})
 
 export default router
