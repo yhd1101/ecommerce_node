@@ -10,87 +10,69 @@ const router = express.Router()
 // product와 관련된 api부분(crud)
 
 //product를 전체를 불러오는 api
-router.get("/", (req, res) => {
-    productModel
-        .find()
-        .then(products => {
-            if(products.length === 0){
-                return res.json({
-                    msg : "data lengths is 0"
-                })
-            }
+router.get("/", async (req, res) => {
+
+    try {
+        const products = await productModel.find()
+        if (products.count === 0) {
             res.json({
-                msg : "get all products",
-                count : products.length,
-                products : products
+                msg : "No data"
             })
-        })
-        .catch(err => {
-            res.json({
-                msg : err.message
-            })
+        }
+        res.json({
+            msg : "get all products",
+            products
         })
 
-    // res.json({
-    //     msg : "product get all"
-    // })
+
+    } catch (err) {
+        res.status(500).json({
+            msg : err
+        })
+    }
+
+
+
 })
 //특정한 product를 불러오는 api
-router.get("/:productid", (req, res) => {
-    productModel
-        .findById(req.params.productid)
-        .then(product => {
-            if(!product){
-                return res.json({
-                    msg : "No data"
-                })
-            }
-            res.json({
-                msg : "Suceesfull get product",
-                product : product
-            })
-        })
-        .catch(err => {
-            res.json({
-                msg : err.message
-            })
-        })
+router.get("/:productid", async (req, res) => {
 
+    const {productid} = req.params
+    try {
+        const product = await productModel.findById(productid)
+        res.json({
+            msg : "Successful get product",
+            product
+        })
+    } catch (err) {
+        res.status(500).json({
+            msg : err
+        })
+    }
+    
 })
 
 //product를 등록하는 api
 
 router.post("/create", (req, res) => {
-    // const newProduct = {
-    //     name : req.body.productName,
-    //     price : req.body.productPrice,
-    //     desc : req.body.productDesc
-    // }
-    const newProduct = new productModel({
-        name : req.body.productName,
-        price : req.body.productPrice,
-        desc : req.body.productDesc,
-        category : req.body.productCategory
+    const {name, price, desc, category} = req.body
 
-    })
-    newProduct
-        .save() //저장
-        .then(aaa => {
-            res.json({
-                msg : "Successful create User",
-                user :aaa
-            })
+    try {
+        const newProduct = new productModel({
+            name, price, desc, category
         })
-        .catch(err => {
-            res.json({
-                msg : err.message
-            })
+        const product =  newProduct.save()
+        res.json({
+            msg : "Successful create User",
+            user : product
         })
 
-    // res.json({
-    //     msg : "created a product",
-    //     productInfo : newProduct
-    // })
+    } catch (err) {
+        res.status(500).json({
+            msg : err
+        })
+    }
+
 })
 
 //product를 수정하는 api
